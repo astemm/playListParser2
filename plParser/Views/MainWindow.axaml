@@ -1,0 +1,55 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:plParser.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="plParser.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Playlist URL Parser (https://www.boomplay.com)"> 
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <StackPanel HorizontalAlignment="Center" Margin="2" Name="AllStack">
+
+    <StackPanel Orientation = "Horizontal" Name="UrlStack">
+    <Label Content="Enter the Playlist Url in the field" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding Input}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </StackPanel>
+
+    <StackPanel Orientation = "Horizontal" Name="ButtonStack">
+    <Button 
+    Command="{Binding OnClickMe}"
+    HorizontalAlignment="Center" 
+    VerticalAlignment="Center">
+            Parse PlayList
+    </Button>
+    <TextBlock Classes="margins" Text="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </StackPanel>
+
+    <StackPanel Orientation = "Horizontal" Name="PlaylistStack">
+    <Image Source="{Binding PlayList.Avatara}" Width="200" Height="200"></Image>
+    <TextBlock Classes="margins" Text="{Binding PlayList.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </StackPanel>
+    
+    <ListBox Items="{Binding Songs}" Grid.IsSharedSizeScope="True"
+    ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <ListBox.ItemTemplate>    
+        <DataTemplate>
+                   <Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" SharedSizeGroup="SongName"/>
+							<ColumnDefinition Width="*" SharedSizeGroup="ArtistName"/>
+                            <ColumnDefinition Width="*" SharedSizeGroup="Duration"/>
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Column="0" Margin="0,0,3,0" Text="{Binding Name}" />
+						<TextBlock Grid.Column="1" Margin="0,0,3,0" Text="{Binding Artist}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Duration}" />
+					</Grid>
+        </DataTemplate>
+    </ListBox.ItemTemplate>
+    </ListBox>
+
+    </StackPanel>
+</Window>
